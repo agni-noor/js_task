@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BFS DOM Traversal</title>
+</head>
+<body>
+  <h1>BFS DOM Traversal Header</h1>
+  <p>This is a paragraph.</p>
+
+  <div>
+    <p>This is a <strong>test</strong> div with <span>some</span> nested <em>elements</em>.</p>
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+  </div>
+
+  <script>
+    function bfsDOMTraversal() {
+      const queue = [document.documentElement]; 
+      const result = [];
+
+      function processNextLevel() {
+        const currentLevelNodes = [];
+
+        while (queue.length > 0) {
+          const node = queue.shift();
+          currentLevelNodes.push(node);
+
+
+          for (let child of node.children) {
+            queue.push(child);
+          }
+        }
+
+        if (currentLevelNodes.length > 0) {
+          result.push(currentLevelNodes); 
+        }
+
+        if (queue.length > 0) {
+          setTimeout(processNextLevel, 0);
+        } else {
+
+          console.log('BFS Traversal Result:', result.map(level => level.map(node => node.tagName)));
+        }
+      }
+
+      processNextLevel();
+    }
+
+    window.onload = bfsDOMTraversal;
+  </script>
+</body>
+</html>
